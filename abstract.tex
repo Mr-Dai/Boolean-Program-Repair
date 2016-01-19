@@ -1,0 +1,15 @@
+\begin{center}
+\label{section:Abstract}
+{\Large Abstract}
+\end{center}
+
+% 类似C语言等拥有控制语句的高级语言，在自动修复的过程中推理其复杂的数据依赖和控制关系往往是比较困难的。
+For high-level programming language like $C$, it is hard to deduce its complicated data dependency and control flow during the progress of automatic repair.
+% 通过将C语言程序转换为布尔程序，本文得以完整模拟布尔程序，收集所有使程序出错的错误路径并推导出正确的布尔修复，并最终转换为修复后的C语言程序，使得整个C语言程序的修复过程完全自动化。
+By converting $C$ program to boolean program and simulating its execution, we managed to collect all bad paths that lead the program into error states, and deduce the exact boolean repair statement by excluding all the bad routes. The repaired boolean program can be converted back to $C$ program, thus the whole procedure of repairing can be deemed fully automatic.
+% 文末，我们给出了根据这些方法实现的C语言程序修复工具的相关设计，并采用了TCAS测试集来验证工具的正确性及有效性。
+We further give out the design and architecture of the automatic repairing tool that is implemented based on this method, and put it under testing to verify its effectiveness and correctness.
+
+\emptyline
+% 关键词：代码修复、布尔程序、逆向转换
+\noindent {\bf Keywords}: Code Repair, Boolean Program, Reverse Conversion

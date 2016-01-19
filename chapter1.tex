@@ -1,0 +1,177 @@
+\section{Introduction}
+\label{section:Introduction}
+\subsection{Background}
+\label{section:Background}
+
+% 调试是发现和减少计算机程序或电子硬件中的错误或缺陷的有序过程，使其按照预期的行为执行。
+Debugging is the process of finding and resolving bugs or defects that prevent correct operation of computer software or a system\cite{APD}.
+% 程序调试的过程包括错误定位和代码修复两个阶段。
+The process of debugging requires {\it fault localization} and {\it program repair}\cite{SPBPRUS}.
+% 错误定位指发现并且确定代码错误的所在位置
+Fault localization means finding the location of faults,
+% 代码修复则是对已定位的错误语句进行一系列的操作来进行错误修复，主要是通过构建正确的语句并移除错误的语句来进行错误修复。
+while program repair means fixing the faults, mostly done by developing correct statements and removing faulty ones\cite{LCoPF}.
+% 代码错误的修复大多数时候需要人工进行，比较困难和耗费时间
+For most cases, such procedure has to be done manually, which can be notoriously hard and time consuming.
+
+% 在软件系统的维护过程中，软件修复是其中的首要任务，在维护过程中发现问题往往需要通过人工去跟踪定位分析，经过再次的开发和测试之后才能发布软件系统的补丁，修复系统错误。
+Program repair takes up the most parts of software maintenance. Finding a bug requires manual tracking and analysis, and only after further development and testing can the update patch be published to fix the bug\cite{SCaMC}.
+% 这种维护技术存在的最大问题就是软件修复占用的周期相对较长，并且在软件修复的工程中只能停止当前软件服务或者暴露软件本身的缺陷来继续执行，这样对软件的可用性和安全性都可能造成严重影响，并且在软件修复周期内造成巨大花费
+Fixing a bug in such maintenance fashion takes up too much time, while the company can only choose to terminate the software or keep it running at the risk of exposing its defect, which could bring great threat to the software's availability and security. Both choices can bring great financial cost to the company\cite{CMfFSLCP}.
+% 在已知的一些报告中也指出，软件的维护，通常指软件系统发布之后对其的改动，造成的花费可能达到整个软件项目的90%。
+Some reports place software maintenance, traditionally defined as any modification made on a system after its delivery, at 90\% of the total cost of a typical software project\cite{CMfFSLCP}.
+% 这些花费主要用在修改更新现有的代码、修复系统的缺陷以及其他涉及到该系统的软件。
+Modifying existing code, repairing defects, and otherwise evolving software are major parts of those costs\cite{AiSE}.
+% 然而，在软件系统中，存在缺陷的数量远远超过了可以用来解决这些缺陷的资源
+However, the number of outstanding software defects typically exceeds the resources available to address them.
+% 即使在一个成熟的软件项目里，由于缺少开发资源来解决每一个发现的缺陷，系统被迫伴随着已知或未知的各种错误一起发布
+Even a mature software projects would be forced to ship with both known and unknown bugs, because they lack the development resources to deal with every defect. For example, in 2005, one Mozilla developer claimed that, “everyday, almost 300 bugs appear, far too much for only the Mozilla programmers to handle.”
+
+% 发现存在问题后的一系列修复过程都靠人工完成是修复周期长和花费巨大的一个重要原因，这样导致修复的时效性较差。
+The great cost of program repair comes from the necessity of manual intervene\cite{SFTiaCA:TaRM}.
+% 针对此问题，软件自动化和智能化修复的研究便成为一个热点。
+To solve such problem, research on automatic software repairing has been in the spotlight.
+% 自动化调试技术能够明显地减少调试的花销。
+% Automation of fixing software bugs can greatly reduce the cost penalties of debugging\cite{OtAoFSB}.
+% 在自动化调试方面，传统的研究集中于对错误定位的研究，大多数的代码修复仍然是通过手工完成的。
+% As for automatic debugging, traditional research focuses on fault localization, while program repair is still mostly done by human.
+Unfortunately, most traditional research focuses on automatic fault localization, while program repair is still done by human.
+% 目前已提出的一些代码修复方法令我们能够相对容易地发现代码出现缺陷的原因，但是他们的精度依然不足以给出单独的具体的代码修复建议，开发人员仍然需要去设计及开发补丁。
+Many effective methods of program repair have been proposed in the recent years, which do make it easier to locate the cause of software defects, but they are still not accurate enough to come up with a concrete advice for program repair: the job of designing and developing update patch still needs to be done by human developers.
+% 开发人员需要的是使系统能够从错误中恢复并且使得这些错误不会再发生。针对这种情况采取的是有计划的修复，也就是说，对于能够预知的错误类型有着定义好的修复策略。
+What developers need is to recover the software system from failure and make sure such error will not happen again\cite{MBAfSHS}. In this circumstance, premeditated repair is generally applied, meaning pre-defined repairing strategies for predicted errors.
+
+% 已经提出的代码修复方法大多都是基于原始的程序来通过形式化规范或者测试用例进行恢复的，而像C语言一样具有控制流结构的程序很难直接对其复杂的数据和控制关系进行推理
+The program repairing methods proposed in recent years are mostly based on formal specifications or test cases, but it is hard to deduce the complicated data dependencies and control flows for high-level programming language like $C$.
+% 在针对程序的控制流结构进行修复的时候，需要用更简单易推理的语言或者规范
+Thus, we need a different language or specification which is easy to deduce its control flow structure as we try to repair the program automatically.
+% 2000年，微软的研究人员提出了一种新的软件分析模型和过程语言——布尔程序
+In 2000, a new model and process for program analysis was proposed by Microsoft researchers -- the boolean program\cite{BP:aMaPfSA}.
+% 布尔程序是跟C语言一样有常规的控制流结构的命令式语言：有函数、递归，同样有全局变量和局部变量。
+Boolean program is similar to C program: they both have functions and recursions, global and local variables\cite{Bb:aSMCfBP}.
+% 唯一的区别就是所有的变量都是布尔类型。
+The difference is that all variables in boolean program are of boolean type and no additional storage is available.
+% 布尔程序同时还支持断言，并行赋值和非确定性
+Boolean programs also support assertions, parallel assignments, and nondeterminism.
+
+% 布尔程序在某种程度上可看作是接受上下文无关语言的下推自动机，它的可达性问题和终止性都是可确定的
+To some extent, boolean program can be considered as a push-down automaton which accepts context-free language, its reachability and termination are both decidable\cite{CFLaPDA}.
+% 布尔程序可看作是C程序的一个抽象表示，因为布尔变量能够代表C程序下的任意谓词，布尔程序能明确地捕捉到数据和控制之间的相关性
+Boolean programs can be thought of as an abstract representation of C programs as it explicitly captures the correlations between data and control flow, in which boolean variables can represent arbitrary predicates over the unbounded state of a C program.\cite{APAoCP}.
+% 布尔程序的这些特性使得它在利用数据和控制关系进行推理的时候非常有用。
+Such characteristics of boolean program make it a suitable tool for data and control flow deduction.
+% 过去针对代码修复的研究中有学者利用了布尔程序的这些特性，从实验结果来看，这种基于控制流结构来进行代码修复的方法非常有效
+Boolean program has already been applied in several program repair research\cite{RoBPwaAtC}, and judged by the experimental results, repairing program based on its control flow structure is effective.
+% 然而，该方法并没有做到完全的自动化，在针对布尔程序得到修复之后，仍然需要通过人工的干预，需要根据得到的布尔修复人工地转换为C程序的修复，并且转换后满足规范的结果可能不是唯一的，同样需要人工去进行选择
+However, such method is not fully automatic: after repairing the boolean program, the boolean repair statement still needs to be converted back to $C$ language by human, and the results that satisfy the specification after conversion might not be unique, it is still human's job to pick one among them.
+% 程序员仍然需要花时间去得到C程序的补丁，这在某种程度上并未完全达到代码自动化修复的目的
+
+% 基于布尔程序的特性，选其作为代码修复过程的中间语言来进行分析和修复是一个值得研究的方法。
+Judging by the characteristics of boolean program, it will make a suitable intermediate language for program analysis and repair.
+% 本文的工作便在利用布尔程序进行代码修复的基础上更进一步，在利用控制流结构对代码进行分析后找到布尔程序修复，并将该修复代码逆向转换为可读可执行的C语言代码，而无需人工进行布尔程序到C程序的转换
+The work we present here goes one step beyond the former research: we analyze the program based on its control flow structure to find out the appropriate boolean repair, and convert the repair statement back to readable and executable $C$ statement automatically, totally without human intervene.
+% 这样，对C程序的错误修复，可以变成从C程序转换成布尔程序、修复布尔程序、把修复布尔程序结果还原成C程序三个步骤，并且每个步骤都自动完成，从而完成修复的完全自动化的过程
+The process of repairing a $C$ program can be considered as three steps: convert the $C$ program into boolean program, repair the boolean program and convert the repaired result back to $C$ program. Each step shall be done automatically to achieve fully automatic program repair.
+% 本文着重研究了其中的第三步。
+We focus on automatizing the third step.
+
+\subsection{Research situation}
+\label{section:ResearchSituation}
+% 在代码自动化修复领域，目前已经提出了一些令人欣喜的自动化修复方法，并解决了一些实际的问题
+In the field of automatic program repair, some intriguing methods have been proposed in recent years.
+% 已经提出的代码修复方法主要有基于用户输入形式化规范和基于测试用例两种
+These methods can be categorized into two types: one based on formal specification the user input and the other based on test cases.
+% 基于形式化规范的优势在于一旦建立正确的形式化规范便能很好地判断程序出现的错误并根据规范建立正确的修复。
+The advantage of specification-based methods is that once a sound specification is established, the system can locate the error and build up the accurate repairing according to the specification.
+% 不足的是，对于用户输入的形式化规范的建立过程较为困难，很难满足和适用。
+Unfortunately, the process of establishing such formal specification is notoriously hard, in which case this type of methods can hardly be generally applied.
+% 而基于测试用例的优势在于不需要建立特定的形式化规范，只要有合理的正确的测试用例便能进行，在这方面也有提出一些实际可用的修复方法。
+Without the necessity of specification, all the methods of the later type need is sound and reasonable test cases. In recent years, several practical methods of this type have been proposed.
+
+% Griesmayer在2006年提出将C程序转换为布尔程序进行修复的方法，并应用于对实际操作系统的驱动程序进行修复。
+In 2006, Griesmayer presented a way to repair a $C$ program by converting it to a boolean program, and applied such method to repair a real-world operating system driver\cite{RoBPwaAtC}.
+% 该技术采用博弈的思想，构造了一个游戏，决策者是系统，对抗者是环境。对于一个怀疑出错的语句，决策者可以决定该表达式有怎样的行为，而对抗者只能决定非确定性语句的选择。
+% 该游戏获胜的策略是决策者的选择要能够不违背程序的规范。如果存在获胜策略，则可以根据选定的决策策略的实现来修复布尔程序。
+Inspired by the concept of Game Theory, Griesmayer considered the repairing problem as a game\cite{PRaaG}. The two players of the game are the environment, which provides the inputs, and the system, which provides the correct values for the unknown expression. The game is won if for any input sequence the system can provide a sequence of values for the unknown expression such that the specification is satisfied. A winning strategy fixes the proper values for the unknown expression and thus corresponds to a repair.
+% 该修复技术的很重要的一个方面是针对布尔程序层面来进行修复，这也是本文工作的一个基础。
+One important aspect of such technique is that it repairs the original program based on its equivalent boolean program, which is also the base of our work.
+% 然而该修复并没有将修复过程完全自动化，得到修复后仍需程序员人工转换目标程序的修复代码并需要人工选择最佳的修复代码。
+However, this technique failed to achieve a fully automatic repairing procedure, as manual intervene is still needed when it comes to converting the boolean repair back to target language and choosing the most suitable one among all those equivalent conversions.
+
+% Demsky等人在2006年提出了数据结构的修复技术，该方法给出了基于数据结构一致性的形式化规范。
+Also in 2006, Demsky proposed a kind of formal specifications that based on data structure consistency\cite{IaEoDSCS}.
+% 当程序的数据结构跟给定的形式化规范违背或有冲突时，数据结构修复算法可以对其修改使其满足形式化规范
+If a conflict between the program's data structure and the given formal specification was detected, the data structure repairing algorithm can change the program's data structure to make sure it satisfy the specification.
+% 这种技术使得程序可以在有致命的数据结构错误时也能继续执行。
+Such technique makes it possible for the program to keep running even if there is a fatal data structure error.
+% 该技术特别适用于需要通过重启来修复的非易失性数据结构的系统，一旦这样的数据结构被破坏，则整个系统都不可用。
+It is quite suitable for those systems with non-volatile data structure, as if such data structure was compromised, the whole system will be unavailable.
+% 通过数据结构修复技术，可以在系统仍然运行的时候对数据结构的不一致性错误进行修复，减少需要通过系统重启来修复造成的损失。
+By applying such technique, the inconsistency error of the data structure can be repaired while the system is still running, which can greatly reduce the cost penalties brought by system reboot.
+% 这种技术只能针对数据结构层面产生的错误，不能覆盖到所有逻辑错误的范围，因此具有一定的局限性。
+However, this technique has its limitation, as it can only deal with the error that comes from data structure, without supporting other kinds of logical error.
+
+% 2008年，Arcuri等人提出了ABF(Automatic bug fixing)的方法，首次将进化计算应用到了代码修复上，进一步推动了代码自动化修复的发展。
+In 2008, Arcuri proposed a method called ABF\footnote{Automatic bug fixing}, which was also the first time the evolutionary computation was applied to program repair\cite{ANCEAtASBF}.
+% Arcuri的技术需要一个包含错误测试用例的可以反映错误所在的单元测试用例和软件对应的形式化规范
+What this method needs is the program's formal specification and a test suite which contains test cases that can reflect the location of the error.
+% 该方法采用进化演算技术来对错误的程序进行修改，通过变异交叉选择得到程序的变种使其通过所有的单元测试用例。
+This method uses evolutionary computation technique to change the original program, ultimately acquiring the program variant that can pass all test cases by mutations and crossovers.
+% 在进行适应性判断时，要依赖给定的形式化规范，即最后的适应性函数是依赖形式化规范来生成尽可能多的单元测试用例或者直接给出单元测试用例集的。
+% 此外，该技术需要控制程序的代码长度，不能应用于复杂的系统，更多地适用于单元测试，因此具有局限性。
+However, such technique is only applicable for programs with limited length. To really scale up to real-world software, it will be compulsory to apply addtional techniques to reduce the search space of the evolution, hence the method as such is still limited.
+
+% 2009年时，Forrest和Weimer等人在前人的基础上进一步研究，将进化计算第一次规模化地应用到实际的软件修复中。
+In 2009, Forrest and Weimer took one step further, for the first time applied evolutionary computation to repairing a real-world software system\cite{AGPAtASR,AFPUGP}.
+% 该技术需要输入反应程序行为的正确测试用例集合和一个展示程序缺陷的错误测试用例，主要思想是用抽象语法树和加权程序路径来维护每一个程序变种，通过遗传算法操作产生程序新的变种，每个变种的适应性是通过正反测试用例的加权值来评估的。
+To use such technique, one must provide a suite of test cases that describes the correct behavior of the program. The algorithm represent each program variant as an AST\footnote{Abstract syntax tree} paired with a weighted program path. New variants are generated by modifying existing variants using crossover and mutation, with each modification producing a new AST and weighted program path. The fitness of each variant is evaluated by compiling the abstract syntax tree and running it on the test cases. Its final fitness is a weighted sum of the positive and negative test cases it passes.
+% 最终生成的补丁能够通过给出的所有测试用例
+The algorithm stops until a variant that can pass all of the test cases are found.
+% 实验表明使用进化计算是可行的自动生成程序修复的方法
+This paper demonstrates the possibility and potential of applying evolutionary computation to automatic program repair.
+% 但是这种技术也存在一定的问题：首先系统性能的开销较大，当要处理的问题规模增大的时候，该算法的搜索空间规模将呈指数级别增长；
+But there is still limitation.
+A significant impediment for such technique is the potentially infinite search space it must sample to find a correct program. Even if auxiliary techniques are applied to reduce the search space,
+it will still grow exponentially as the size of the software grows.
+% 其次该算法依赖大量的测试用例，而给出的测试用例很难覆盖程序的所有功能的需求，这种情况下进化产生出来的程序变种很可能牺牲了程序的重要功能
+Secondly, one must provide a huge number of test cases to fully describe all use cases of the software, which is difficult to produce manually as it is hard to know if a test suite is complete.
+Such test suite is necessary, as providing an insufficient test suite might result in a variant that fail to achieve some important functionality that the suite fails to describe.
+
+% 利用布尔程序来进行代码修复在2006年提出来后并没有更进一步发展，
+Further research on applying boolean program on program repair can hardly be found since 2006.
+% 统计上可见近年来的代码修复研究趋势都侧重于针对程序的形式化规范来检测修复错误，亦或利用大量的测试用例来检测程序变种是否正确。
+Statistically, research in recent years concentrates on specification-based fault localization and test-case-based GP\footnote{Genetic Programming} program repair.
+% 利用布尔程序来修复是一个非常值得深入研究的领域。
+We believe there is more for boolean program.
+% 当前已经有成熟的工具可以将C程序转换为布尔程序，例如微软提出的SLAM以及牛津大学和卡内基梅隆大学的研究人员提出的SATABS。
+There are mature tools like SLAM\cite{SLAM}, presented by Microsoft, and SATABS\cite{SATABS}, presented by researchers from Oxford University and Carnegie Mellon University,
+% 这些工具都可以将原始的程序转换成布尔程序，便于进一步的验证或其他工作。
+that can be used to convert a $C$ program to its equivalent boolean program for further verification and other process.
+% 通过这些工具我们可以将C程序转换为对应的布尔程序，然而通过布尔程序去反向推导C程序的结果可能不是唯一的。
+The tools can help with the conversion to boolean programs, but converting a given boolean program back to $C$ language might result in more than one valid programs.
+% 例如，在布尔程序中有变量p1和p2，p1表示C程序中的a==0，p2表示a>1。假如得到的布尔程序结果是p1和p2均为false，那么在转换回C程序的时候就有可能是a == 1或者是a < 0这样不唯一的结果。
+For example, there are variables $p1$ and $p2$ in a boolean program, representing the predicates $a == 0$ and $a > 1$ of the original $C$ program. If there is a statement $p1 == false \&\& p2 == false$ in the boolean program,
+it could be $a == 1$ or $a < 0$ when it is converted back to $C$ language.
+% 在研究中也尚未发现目前有工具可以对布尔程序进行逆向转换并选择适合的结果
+So far, there is no such tool for converting a boolean program back to $C$ language and choosing appropriately among valid options.
+
+\subsection{Structure of the Paper}
+\label{section:StructureOfThePaper}
+% 本文给出了针对布尔程序的代码修复结果逆向转换为C程序的方法，并应用该方法设计并初步实现了完整的代码修复工具
+We shall present the basic algorithm of converting boolean program back to $C$ language in this paper, and implement a complete program repair tool by using this algorithm.
+% 本文共分为七章：
+The paper will be presented in seven sections:
+% 第一章对布尔程序修复逆向转换工具的研究背景和意义等方面进行了介绍，分析了现存的代码修复主要研究方法及其不足，探讨了逆向转换工具的必要性
+Section 1 introduces the basic research situation of boolean program repair, analyzes the limitations of some well-known program repair methods and drops a hint of the necessity of a boolean program reverse conversion tool.
+% 第二章是预备知识，介绍布尔程序的基本语法以及后面章节需要用到的基本概念
+Section 2 is for preliminaries, introducing the basic syntax of boolean programs and other basic concepts which are used in later sections.
+% 第三章简要描述了获得布尔修复的过程，并主要阐述如何对找到的布尔修复进行逆向转换并判断该修复的有效性。
+Section 3 first will present the basic process of computing a boolean repair statement, and then focus on converting the statement back to $C$ language and verifying its effectiveness.
+% 第四章将说明逆向转换工具的基本结构，并给出工具的算法复杂度
+Section 4 introduces the basic architecture of the program repair tool and analyzes the computational complexity of the tool, with the basic implementation of the tool given in pseudo-code.
+% 第五章给出工具的大致实现及伪代码
+% Section 5 presents the basic implementation of the tool in pseudo-code.
+% 第六章将采用Siemens Suit中的TCAS测试用例对本系统进行测试
+Section 5 applies the TCAS test suite from Siemens Suit to verify the correctness and effectiveness of the tool.
+% 第七章总结全文，探讨有待进一步开展的工作
+Section 6 is for conclusion, discussing further works.

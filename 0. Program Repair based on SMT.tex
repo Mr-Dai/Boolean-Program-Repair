@@ -1,0 +1,56 @@
+\documentclass[10pt,journal,final,]{article}
+\usepackage{amsmath}
+\usepackage{makeidx}
+\usepackage{cite}
+\usepackage{listings}
+\usepackage{bm}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{stmaryrd}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\pagestyle{plain}
+
+% If you don't want to indent each first paragraph after sectional headings, comment this
+\usepackage{indentfirst}
+
+\newcommand{\emptyline}{\vspace{\baselineskip}}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
+
+\lstset{
+  language=C,
+  basicstyle=\footnotesize\ttfamily,
+  otherkeywords={*,then,:=,fi,goto,end}
+}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+
+\begin{document}
+
+\title{Program Repair Based on SMT}
+\author{Zhang Ling, Wan Hai, Peng Yi, Guo BoTing}
+\date{\today}
+\maketitle
+
+\include{abstract}
+\include{chapter1}
+\newpage
+\include{chapter2}
+\newpage
+\include{chapter3}
+\newpage
+\include{chapter4}
+\newpage
+\include{chapter5}
+\newpage
+\include{chapter6}
+\newpage
+\bibliography{bpr}{}
+\bibliographystyle{ieeetr}
+
+\end{document}
