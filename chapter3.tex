@@ -3,7 +3,7 @@
 \label{section:BooleanProgramRepair}
 \subsection{Repairing by Bad Routes}
 % 为了找到错误，首先要建立合适的错误模型。在本文中，我们假设程序只包含一个错误，也就是说在C 语言程序中只包含一个错误语句。
-For accurate fault localization, appropriate model for {\it fault} is essential. In the following sections, we assume there is only one line faulty code in the original $C$ program.
+To locate fault accurately, establishing an appropriate model of {\it fault} is essential. In the following sections, we assume there is only one line of faulty code in the original $C$ program.
 \subsubsection{Constructing Fault Model}
 % 本文的错误模型只针对C语言程序的一个语句，更确切的说是针对C语言程序里的一行语句。
 In this paper, we focus on one single error in the original $C$ program. To be more specific, one {\it line} of faulty statement is all we concern.
@@ -25,7 +25,7 @@ In a word, one line of faulty statement in $C$ will only correspond to one line 
 
 \begin{figure}
 \centering
-\includegraphics[width=1.7in,height=2in]{Fig3-1.jpg}
+\includegraphics[width=1.7in,height=2in]{img/Fig3-1.jpg}
 \caption{The C program from Figure \ref{fig:BPC}}
 \label{fig:FC}
 \end{figure}
@@ -90,7 +90,7 @@ In other word, $c$ is the set of evaluations which makes $*rep$ return $1$. For 
 
 \begin{figure}
 \centering
-\includegraphics[width=5in,height=3.5in]{Fig3-2.jpg}
+\includegraphics[width=5in,height=3.5in]{img/Fig3-2.jpg}
 \caption{An example of finding all bad routes}
 \label{fig:FBR}
 \end{figure}

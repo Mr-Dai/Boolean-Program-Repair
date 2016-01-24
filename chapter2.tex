@@ -40,14 +40,14 @@ Formally speaking, assume the automaton of invoker function being $src$ and the 
 
 \begin{figure}
 \centering
-\includegraphics[width=5in,height=2.5in]{Fig2-1.jpg}
+\includegraphics[width=5in,height=2.5in]{img/Fig2-1.jpg}
 \caption{An example of boolean program conversion}
 \label{fig:BPC}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=2.5in,height=2.5in]{Fig2-2.jpg}
+\includegraphics[width=2.5in,height=2.5in]{img/Fig2-2.jpg}
 \caption{The control flow graph}
 \label{fig:CFG}
 \end{figure}
@@ -84,7 +84,7 @@ For example, given the C program in Figure \ref{fig:BPC}(a), the predicate set c
 \subsubsection{Converting a Control Flow Statement}
 \label{section:ConvertingAControlFlowStatement}
 % 除了由赋值语句组成的初始块，程序中还包括了if、while和for等控制语句。
-Except for basic blocks of assignment statements, there are also control flow statements like $if$, $while$ and $for$ in boolean program.
+Except for basic blocks of assignment statements, there are also control flow statements like \lstinline|if|, \lstinline|while| and \lstinline|for| in boolean program.
 % 这些语句包含作为参数的条件语句，但它们不会改变变量的取值而只会决定控制流的方向 \cite{35}。
 Some of them can have conditional expression as their parameter, but they will not change the values of variables: all they do is changing the direction of control flow.
 % 表2-1中给出了C语言程序中比较常见的控制语句转换的例子。从表中的3个例子可以总结出C语言程序的控制结构转换为布尔程序的规则。
@@ -93,11 +93,12 @@ Table \ref{table:ControlStatementConversions} shows examples of conversions of $
 \begin{table}
 \label{table:ControlStatementConversions}
 \center
+\caption{Examples of Boolean Statement Conversions}
 \begin{tabular}{c|l|c|l}
 \hline
 Type & C & Predicate & Boolean Program \\
 \hline
-$if$&
+(1)$if$&
 \begin{lstlisting}
 if(x>1){
   f();
@@ -116,7 +117,7 @@ b1 : x>1
 l1:
 \end{lstlisting} \\
 \hline
-$while$&
+(2)$while$&
 \begin{lstlisting}
 while(x>1){
   x=x-1;
@@ -140,7 +141,7 @@ l1:
 l2:
 \end{lstlisting} \\
 \hline
-$for$&
+(3)$for$&
 \begin{lstlisting}
 a=2;
 for(i=0;i<a;i++){
@@ -211,7 +212,7 @@ It would be a little tricky when we are dealing with functions with result retur
 
 \begin{figure}
 \centering
-\includegraphics[width=4in,height=3in]{Fig2-3.jpg}
+\includegraphics[width=4in,height=3in]{img/Fig2-3.jpg}
 \caption{Another example of boolean program conversion}
 \label{fig:BPC_1}
 \end{figure}
