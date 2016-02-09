@@ -197,8 +197,9 @@ Hence, before we convert the boolean repair to $C$ statement, there will be ways
 In the following sections, we will use three different ways to simplify the repairing statement.
 
 \subsubsection{Removing Unsatisfiable Clauses}
+\label{section:RemovingUnsatisfiableClauses}
 % 给定可满足的修复公式...，公式子句外的化简是通过判断公式中每个修复子句...的可满足性进行的。
-For a given satisfiable repairing statement $\varphi _{rep} := \varphi _{1} \vee \varphi _{2} \vee \dots \vee \varphi _{n}$, one can proceed outer-clause expression simplification by examining the satisfiability of every clause $\varphi _{i}$.
+For a given satisfiable repairing statement $\varphi _{rep} := \varphi _{1} \vee \varphi _{2} \vee \dots \vee \varphi _{n}$, one can proceed the outer-clause simplification by examining the satisfiability of every clause $\varphi _{i}$.
 % 如果修复子句φ_i是可满足的，则保留该修复子句；否则，则将其从修复公式φ_rep中移除。
 If the clause is satisfiable, it should be preserved; otherwise, it can be removed from $\varphi _{rep}$.
 % 由3.2节可知，判断子句的可满足性同样可以规约到可满足性模理论问题。
@@ -244,6 +245,7 @@ Combined with equation (\ref{eq:2}), we have
 \end{proof}
 
 \subsubsection{DNF Simplification}
+\label{section:DNFSimplification}
 In this section, we will elucidate how one can proceed inter-clause simplification based on the characteristics of DNF\footnote{Disjunctive normal form}.
 
 A DNF expression can be considered as a tree of clauses, while in the field of computer algorithm, tree-like structure is simplified mostly by rule-based methods. Several general and effective simplification rules will be listed and proved below accordingly.
@@ -300,9 +302,10 @@ No doubt, adding more rules can enhance the accuracy of this algorithm,
 but judging from experimental results, these two rules are already effective enough for most cases.
 
 \subsubsection{Simplification based on Background Theories}
+\label{section:SimplificationBasedOnBackgroundTheories}
 Let us start this section with a simple example: assume we have a simplified repairing expression $\varphi _{rep} = p _{1} \vee p _{2}$ after applying the methods described in former sections,
 where $p _{1}$ is \lstinline|x < 2| and $p _{2}$ is \lstinline|x < 3|. The corresponding $C$ statement of $\varphi _{rep}$ would be \lstinline{x < 2 || x < 3}, which can still be simplified to be \lstinline|x < 3|.
-In this sense, simplification based on background theories is necessary to produce a simplified and intuitive $C$ statement.
+In this sense, inner-clause simplification based on background theories is necessary to produce a simplified and intuitive $C$ statement.
 
 \begin{theorem}
 \label{theorem:1}
