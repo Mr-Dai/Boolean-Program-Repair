@@ -6,7 +6,7 @@ A (still on writing) paper describing how to repair a faulty C program automatic
 
 - [x] Revise Chapter 1
 - [x] Revise Chapter 2
-- [ ] Revise Chapter 3
+- [x] Revise Chapter 3
 - [ ] Revise Chapter 4
 - [ ] Revise Chapter 5
 - [ ] Revise Chapter 6
