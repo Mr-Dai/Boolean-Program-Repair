@@ -14,7 +14,7 @@ A (still on writing) paper describing how to repair a faulty C program automatic
 
 ## How to contribute
 
-The main document file is `0.bpr.tex`, chapter files include `abstract.tex`, `chapter1.tex`, `chapter2.tex`, `chapter3.tex`, `chapter4.tex`, `chapter5.tex`, `appendixA.tex`(not created yet).
+The main document file is `0.bpr.tex`, chapter files include `abstract.tex`, `chapter1.tex`, `chapter2.tex`, `chapter3.tex`, `chapter4.tex`, `chapter5.tex`, `chapter6.tex` and `appendixA.tex`.
 
 Automatic compiling and cleaning scripts are included in the project. Before using it, make sure you have installed `xelatex` and `bibtex` and included them in your execution environment.
 
