@@ -1,21 +1,18 @@
 \section{Summary}
 % 在本文中，我们介绍了如何将C语言程序转换为布尔程序，通过收集布尔程序的错误路径得出正确的布尔修复，并介绍了该如何验证该布尔修复的可满足性
-In this paper, we illustrated the basic conversion rules from $C$ program to boolean program,
-and by collecting bad routes for the converted program, we managed to produce an appropriate boolean repair for a faulty program.
-Examination of the satisfiability of the boolean repair is also introduced in the paper.
+In this paper, we illustrated the basic conversion rules from $C$ program to boolean program, and by collecting bad paths for the converted program, we managed to produce an appropriate boolean repair for a faulty program. Examination of the satisfiability of the boolean repair is also introduced in the paper.
 % 最终，通过对布尔修复进行化简，我们得到了正确有效且相对直观的C语言修复表达式。
-At last, by simplifying the boolean repair, an effective and relatively intuitive $C$ repairing statement is generated.
+At last, by simplifying the boolean repair, an effective and relatively intuitive $C$ repair statement was generated.
 % 我们还对实现的工具进行了大量的测试，证明了该方法对于TCAS测试集中的赋值语句错误和控制语句错误都能找到正确的修复结果。
-A lot of tests are also performed on the program repair tool, proving that the method described in this paper is capable of repairing assignment statement faults and control flow statement faults of TCAS.
+Numbers of tests are also performed on the program repair tool, proving that the method described in this paper is capable of repairing assignment statement faults and control flow statement faults in TCAS.
 
 % 本文设计并实现的布尔程序修复工具，在功能上仍有改进的空间。
 There are still more work to be done on the program repair tool.
 % 在布尔程序修复模块，尽管能够找到正确的修复，但是修复的时间和空间复杂度较高，
-For the boolean program repair module, though it is capable of finding a correct repairing statement, it comes with significantly high time complexity.
+For the boolean program repair module, though it is capable of finding a correct repairing statement, it comes with considerably high time complexity.
 % 当布尔变量数增加时，复杂度会呈指数级增长，制约了修复的效率
 The time cost will grow exponentially as the number of variables grows, which limits its availability for real-world programs.
 % 因此下一步的工作中将对修复算法的搜索进行优化。
 In this case, further work can be done on optimizing the search algorithm used in this module.
 % 除此之外，本文所使用的错误模型只适用于单行语句的错误，这其中只包括了很少一部分简单错误。下一步工作也将继续扩展支持的错误类型，如死循环和程序的语句缺失错误等。
-Besides, the fault model defined in this paper only supports those faults lying in one single statement, which include only a few kinds of faults.
-Hence, supporting more kinds of faults, such as infinite loop and missing statements, can also be considered for further improvement.
+Besides, the fault model defined in this paper only supports those faults lying in one single statement, which include only a few kinds of faults that can be found in real-world programs. Hence, supporting more kinds of faults, such as infinite loop and missing statements, can also be considered for further improvement.

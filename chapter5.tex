@@ -1,15 +1,13 @@
-
 \section{Experiment}
 % 为了验证本文方法及工具的可行性与正确性，本章给出了对布尔程序逆向转换修复的测试实验。
-To verify the effectiveness and correctness of the methods and tool described in former sections, detailed experimental results and analysis will be given in the following sections..
+To verify the effectiveness and correctness of the methods and tool described in former sections, detailed experimental results and analysis will be given in this following section.
 % 本章实验通过对现有的标准程序进行修复和转换，从修复结果的准确率和修复的效率等方面对布尔程序逆向转换工具进行评价
-In the experiment, the program repair tool will be used to repair given programs and evaluated based on its accuracy and efficiency.
+In the experiment, the program repair tool will be used to repair some programs and evaluated based on its accuracy and efficiency.
 
 % 在本章的实验中，主要针对工具能够修复的赋值错误和控制条件语句错误进行了修复及转换测试
 The experiment mainly tested the tool on its ability to convert and repair assignment statements and conditional control flow statements (\lstinline|if|).
 % 其中选取了在程序诊断中比较常用到的西门子套件中的TCAS程序以及一些针对TCAS未能覆盖的循环语句条件错误的测试程序。
-To be more specific, TCAS program from Siemens Suite, which has been used as a benchmark to evaluate the effectiveness of many testing techniques, is used in this experiment.
-More customized programs are added to the test cases to test the tool's ability of repairing boolean expression faults in loop statements, which Siemens' TCAS fails to cover.
+To be more specific, Several test cases of TCAS program from Siemens Suite, which has been used as a benchmark to evaluate the effectiveness of many testing techniques, are used in this experiment. More customized programs are added to the test cases to test the tool's ability of repairing boolean expression faults in loop statements, which Siemens' TCAS fails to cover.
 
 \subsection{TCAS of Siemens Suite}
 \subsubsection{Introduction}
@@ -18,7 +16,7 @@ The TCAS program used in the experiment comes from Siemens Suite, which has been
 % 该程序的主要功能是模拟飞机调度中产生冲突的情况及给出了防止飞机相撞的办法。[51]
 TCAS, or traffic collision avoidance system, is an aircraft collision avoidance system designed to reduce the incidence of mid-air collisions between aircraft\cite{TCAS}.
 % TCAS有正确版本的程序以及41个不同错误版本的错误程序，此外，在TCAS的基准套件中还给出了1608个不同的测试用例输入。
-Siemens Suite provides a correct TCAS program, along with 41 different faulty versions. Additionally, 1608 different test cases are also provided in Siemens Suite.
+Siemens Suite provides a correct TCAS program, along with 41 different faulty versions. Additionally, 1608 different test cases are provided in Siemens Suite.
 % 程序长度为173行，包含25个全局变量，除main函数外还有其他8个函数，因此程序中有函数调用。
 The program has 173 lines of statements, including 25 global variables and 8 functions except for \lstinline|main| function.
 % 在给出的41个不同错误版本中，V10、V11、V15、V31、V32、V33、V40的版本中包含多个错误，不在本文的修复考虑行列，因此不做统计。
@@ -33,14 +31,14 @@ The statistics of the rest 34 versions is listed in table \ref{table:SoTCASTC}, 
 \label{table:SoTCASTC}
 \begin{tabular}{lll}
 \hline
-Version                                          & Fault Type                  & Detailed Fault Type         \\
+Version                                 & Fault Type                  & Detailed Fault Type         \\
 \hline
-$V5$,$V21$,$V22$,$V23$,$V24$,$V27$,$V41$         & Assignment Statement Fault  & Logical Error in Assignment \\
-$V1$,$V3$,$V4$,$V6$,$V9$,$V12$,$V20$,$V25$,$V39$ & Assignment Statement Fault  & Wrong Operator              \\
-$V13$,$V14$,$V16$,$V17$,$V18$,$V19$,$V36$,$V38$  & Declaration Error           & Declaration Error           \\
-$V2$,$V28$,$V29$,$V30$,$V35$,$V37$               & Assignment Statement Fault  & Wrong `return` Statement    \\
-$V7$,$V8$                                        & Assignment Statement Fault  & Initialization Error        \\
-$V34$                                            & Conditional Statement Fault & Wrong Condition Expression  \\
+$5$,$21$,$22$,$23$,$24$,$27$,$41$       & Assignment Statement Fault  & Logical Error in Assignment \\
+$1$,$3$,$4$,$6$,$9$,$12$,$20$,$25$,$39$ & Assignment Statement Fault  & Wrong Operator              \\
+$13$,$14$,$16$,$17$,$18$,$19$,$36$,$38$ & Declaration Error           & Declaration Error           \\
+$2$,$28$,$29$,$30$,$35$,$37$            & Assignment Statement Fault  & Wrong `return` Statement    \\
+$7$,$8$                                 & Assignment Statement Fault  & Initialization Error        \\
+$34$                                    & Conditional Statement Fault & Wrong Condition Expression  \\
 \hline
 \end{tabular}
 \end{table}
@@ -55,19 +53,18 @@ to examine the program's output.
 By doing so, the given input and expected output of the test cases give out the specification of the program's behavior.
 
 % 在对TCAS的修复实验中，为了验证前文提到的多个测试用例修复方法还进行了当程序只加入一个测试用例输入以及加入多个测试用例输入时的结果对比。
-In the TCAS repairing experiment, we introduce different numbers of test cases to one faulty version, hoping to prove the effectiveness of the multi-test-case repair method we described in section \ref{section:MultipleTestCasesRepair}.
+In the TCAS repairing experiment, we introduced different numbers of test cases to one faulty version, hoping to prove the effectiveness of the multi-test-case repair method we described in section \ref{section:MultipleTestCasesRepair}.
 
 \subsubsection{Experimental Results}
-% 针对表5-1中可以被修复的26个程序版本进行了实验，对于这些版本的错误，使用多个测例进行修复并转换的方法均能找到程序的修复。
-We experimented on the 26 faulty versions listed in table \ref{table:SoTCASTC} whose faults are supported by the tool.
-For the faults of these versions, the repairing method which uses multiple test cases can locate all of them.
+% 针对表5-1中可以被修复的26个程序版本进行了实验，对于这些版本的错误， 使用多个测例进行修复并转换的方法均能找到程序的修复。
+We experimented on the 26 faulty versions listed in table \ref{table:SoTCASTC} whose faults are supported by the tool. For the faults of these versions, the repairing method which uses multiple test cases managed to locate all of them.
 
 % 表5-2列举了其中10个版本的程序的测试实验结果。
 % TODO 加入表格引用
 The results of 10 of them are listed in table \ref{table:RoTCASTC}. Meanings of columns in table \ref{table:RoTCASTC} are listed below:
 
 \begin{enumerate}
-\item {\it Version}: the version number of the corresponding version.
+\item {\it Version}   : the version number.
 \item $V$             : the number of global and relevant boolean variables.
 \item $LoBP_{1}$      : the length of converted boolean program when only one test case is introduced.
 \item $Time_{1}$($s$) : the time in seconds used to repair the given boolean program when only one test case is introduced.
@@ -77,8 +74,7 @@ The results of 10 of them are listed in table \ref{table:RoTCASTC}. Meanings of 
 \item $Result_{2}$    : the number of test cases which cover bad routes effectively and the number of test cases we use.
 \end{enumerate}
 
-We shall give you a detailed insight into one of them.
-Takes $V1$ as an example, we use 6 test cases to find out a correct repairing statement, which is $*rep=(b4)|(b3)|(b2)|(!b1)|(b0)$ with respective predicates of each variable are listed below:
+We shall give you a detailed insight into one of them. Takes $V1$ as an example, we used 6 test cases to find out a correct repair statement, which was $*rep=(b4)|(b3)|(b2)|(!b1)|(b0)$ with respective predicates of each variable listed below:
 
 \begin{itemize}
 \item[-] $\text{b0} : \textit{Down\_Separation} - \textit{Positive\_RA\_Alt\_Thresh}[\textit{Alt\_Layer\_Value}] == 0$
@@ -88,9 +84,7 @@ Takes $V1$ as an example, we use 6 test cases to find out a correct repairing st
 \item[-] $\text{b4} : \textit{Down\_Separation} - \textit{Up\_Separation} >= 100$
 \end{itemize}
 
-Judging from the experimental result, $*rep$ is satisfiable. After applying the simplification rules we described in former section,
-we have a converted $C$ repairing statement \lstinline|Down_Separation - Positive_RA_Alt_Thresh[Alt_Layer_Value] < 0| \lstinline| && | \lstinline|Down_Separation - Up_Separation < 100| \lstinline| && | \lstinline|Other_Tracked_Alt - Own_Tracked_Alt > 0|.
-After replacing the faulty statement with the above statement, the repaired program passed all test cases.
+Judging from the experimental result, $*rep$ is satisfiable. After applying the simplification rules we described in former section, we have a converted $C$ repair statement \lstinline|Down_Separation - Positive_RA_Alt_Thresh[Alt_Layer_Value] < 0| \lstinline| && | \lstinline|Down_Separation - Up_Separation < 100| \lstinline| && | \lstinline|Other_Tracked_Alt - Own_Tracked_Alt > 0|. After replacing the faulty statement with the above statement, the repaired program passed all test cases.
 
 \begin{table}
 \small
@@ -129,14 +123,19 @@ $34$    & $3/17$  & $856$      & $105.3$         & $83.2\%$     & $835$     & $6
 % TCAS程序中涉及到控制条件语句错误的版本只有函数调用、选择控制和赋值等语句，而没有循环语句结构，
 Loop statement fault is the kind of fault which the TCAS from Siemens Suite fails to cover.
 % 因此为了验证本文工具的修复功能的全面性，在测试的过程中又增加了两组程序，这两组程序分别包含了while循环和for循环语句结构，
-In this case, two groups of customized programs are added to the test cases. Both groups implement the algorithm of finding the maximum value of a given array.
+In this case, two groups of customized programs are added to the experiment. Both groups implement the algorithm of finding the maximum value of a given array.
 % 程序实现的功能是查找给出数组中最大的数。
-The difference is one group is implemented by \lstinline|while| loop while the other is \lstinline|for| loop.
+The difference is, one group is implemented by \lstinline|while| loop while the other is \lstinline|for| loop.
 
 % 本实验中分别对每个程序给出了两个错误的版本（如图5-1所示），版本1的错误位置分别出现在while和for循环中的循环控制条件中，版本2的错误位置则出现在循环体内的if控制条件语句内。
-Two faulty versions of both programs are respectively given in Figure 5-1, in which fault 1 is located in the condition expression of loop statement, while fault 2 is located in the \lstinline|if| statement in the loop body.
+Two faulty versions of both programs are respectively given in Figure \ref{fig:WaF}, in which fault 1 is located in the condition expression of loop statement, while fault 2 is located in the \lstinline|if| statement in the loop body.
 
-% TODO 在此处插入图5-1
+\begin{figure}
+\centering
+\includegraphics[width=5in]{img/Fig5-1.jpg}
+\caption{While loop and for loop faulty programs}
+\label{fig:WaF}
+\end{figure}
 
 \subsubsection{Experimental Results}
 % 对while和for循环的两个错误版本中只需要采用一个测试用例便可以得到修复的结果
@@ -175,8 +174,7 @@ $for_2$   & $5/40$  & $178$      & $0.30$          & $58.3\%$     & $178$     & 
 \end{table}
 
 % 从实验结果可以看出对于包含while和for循环结构的程序的循环控制条件语句错误以及if控制条件语句错误，本文所设计的布尔程序修复逆向转换工具也能对其进行修复，进一步验证了本文所设计工具的有效性。
-Judging from the experimental results, the tool is capable of handling loop statement fault and conditional control flow statement fault,
-which provides convincing evidence of the tool's effectiveness.
+Judging from the experimental results, the tool is capable of handling loop statement fault and conditional control flow statement fault, which also provides convincing evidence of the tool's effectiveness.
 
 % 在附录一中将会给出本章实验的具体测试用例的错误语句、布尔程序修复语句以及转换后的修复结果语句。
 % TODO 添加附录引用
@@ -184,14 +182,12 @@ In Appendix A, the concrete test cases we used in the experiment and the respect
 
 \subsection{Conclusions}
 % 本章的实验结果数据表明本文的方法对于控制条件错误和赋值语句右部错误例如赋值逻辑错误、操作符错误、返回语句错误等程序里实际存在的错误能够给出实际有效且符合坃程序语法语义的修复结果。
-Based on the experimental results listed in the former sections, one can say the tool is capable of producing an effective and intuitive repairing statement for many kinds of faults,
-including assignment statement fault and conditional control flow statement fault, which generally exist in most faulty programs.
+Based on the experimental results listed in the former sections, one can say the tool is capable of producing an effective and intuitive repair statement for many kinds of faults, including assignment statement fault and conditional control flow statement fault, which generally exist in most faulty programs.
 
 % Griesmayer[18]在2005年的工作自动找到布尔程序的修复结果之后需要通过程序员人工地将结果转换为布尔程序的结果，没有达到自动化的目的。
-In 2005, Griesmayer managed to find the boolean repair automatically\cite{RoBPwaAtC}, but manual intervene is still needed to convert the boolean repair back to the original programming language.
-In this sense, Griesmayer's work failed to achieve complete automation for program repair.
+In 2005, Griesmayer managed to find the boolean repair automatically\cite{RoBPwaAtC}, but manual intervene is still needed to convert the boolean repair back to the original programming language. In this sense, Griesmayer's work failed to achieve complete automation for program repair.
 % 实验结果表明本文的工作完成了程序修复的自动化过程，能够直接地找到坃程序的有效修复。
-Judging from the experimental results, our tool is capable of completing the whole process of program repair automatically and producing an effective repairing statement.
+Judging from the experimental results, our tool is capable of completing the whole process of program repair automatically and producing an effective repair statement.
 
 % Weimer[22]在2009年提出的利用遗传算法来进行程序修复的方法修复的是死循环和段错误以及堆栈溢出等错误类型，并没有实验结果显示能够修复具体的赋值逻辑错误和操作符错误等。
 In 2009,  Forrest and Weimer for the first time apply evolutionary computation to repair a real-world software system\cite{AFPUGP}. Their repairing system was capable of repairing faults like
