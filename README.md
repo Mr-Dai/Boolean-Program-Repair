@@ -8,9 +8,9 @@ A (still on writing) paper describing how to repair a faulty C program automatic
 - [x] Revise Chapter 2
 - [x] Revise Chapter 3
 - [x] Revise Chapter 4
-- [X] Revise Chapter 5
-- [X] Revise Chapter 6
-- [ ] Write Appendix A
+- [x] Revise Chapter 5
+- [x] Revise Chapter 6
+- [x] Write Appendix A
 
 ## How to contribute
 

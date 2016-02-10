@@ -1,5 +1,6 @@
 \documentclass[preprint]{elsarticle}
 \usepackage{amsmath}
+\usepackage[toc,page]{appendix}
 \usepackage{makeidx}
 % \usepackage{cite}
 \usepackage{listings}
@@ -41,16 +42,15 @@
 \include{abstract}
 
 \include{chapter1}
-\newpage
 \include{chapter2}
-\newpage
 \include{chapter3}
-\newpage
 \include{chapter4}
-\newpage
 \include{chapter5}
-\newpage
 \include{chapter6}
+\begin{appendices}
+\input{appendixA}
+\end{appendices}
+
 \newpage
 \bibliography{bpr}{}
 \bibliographystyle{ieeetr}

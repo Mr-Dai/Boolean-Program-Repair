@@ -1,0 +1,181 @@
+\section{Experimental Data and Results}
+\label{appendix:ExperimentalDataandResults}
+% 附录A中将给出本文第五章实验测试中所用到的测试数据及测试结果（主要给出得到正确修复时的数据），
+Experimental data and results used in the experiments described in section \ref{section:Experiment} will be given in this appendix.
+% 每个测试集合里包含的信息有：（1）测试程序的版本号；（2）测试程序中错误的语句及位置；
+Data includes: version number of testing program, faulty statement of the program and its location (line number),
+% （3）通过布尔程序修复后得到的原语句右部的布尔修复结果；
+boolean repair and the equivalent $C$ repair statement.
+% (4）利用本文设计的工具对布尔程序修复进行转换后得到的C程序修复语句。
+
+\begin{itemize}
+\item TCAS-v1
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|75:| \lstinline|result !=| \lstinline|!(Own_Below_Threat())| \lstinline{||} \lstinline|((Own_Below_Threat())| \lstinline|&&| \lstinline|(!(Down_Separation > ALIM())));|
+\item[-] Boolean repair:
+
+\lstinline{b4 | b3 | b2 | !b1 | b0}
+\item[-] C repair statement: 
+
+\lstinline|result =| \lstinline|Down_Separation - Positive_RA_Alt_Thresh[Alt_Layer_Value] < 0| \lstinline|&&| \lstinline|Down_Separation - Up_Separation < 100| \lstinline|&&| \lstinline|Other_Tracked_Alt - Own_Tracked_Alt > 0;|
+\end{itemize}
+
+\item TCAS-v3
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|120:| \lstinline|intent_not_known =| \lstinline|Two_of_Three_Reports_Valid| \lstinline{|| Other_RAC == NO_INT_ENT;}
+\item[-] Boolean repair:
+
+\lstinline{!b1 | b0}
+\item[-] C repair statement: 
+
+\lstinline|intent_not_known =| \lstinline|Other_RAC == 0| \lstinline|&&| \lstinline|Two_of_Three_Reports_Valid != 0;|
+\end{itemize}
+
+\item TCAS-v4
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|79:| \lstinline|result =| \lstinline|Own_Above_Threat()| \lstinline|&&| \lstinline|(Cur_Vertical_Sep >= MINSEP)| \lstinline{|| (Up_Separation >= ALIM());}
+\item[-] Boolean repair:
+
+\lstinline{false}
+\item[-] C repair statement: 
+
+\lstinline|result = 0|
+\end{itemize}
+
+\item TCAS-v5
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|118: enabled = High_Confidence| \lstinline|&& (Own_Tracked_Alt_Rate <= OLEV);|
+\item[-] Boolean repair:
+
+\lstinline{b2 | !b1 | !b0}
+\item[-] C repair statement: 
+
+\lstinline| enabled = (Cur_Vertical_Sep > 600| \lstinline|&& High_Confidence != 0| \lstinline|&& Own_Tracked_Alt_Rate < 601);|
+\end{itemize}
+
+\item TCAS-v6
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|104: return| \lstinline|(Own_Tracked_Alt <= Other_Tracked_Alt);|
+\item[-] Boolean repair:
+
+\lstinline{b2 | !b1 | !b0}
+\item[-] C repair statement: 
+
+\lstinline|return (Other_Tracked_Alt - Own_Tracked_Alt > 0);|
+\end{itemize}
+
+\item TCAS-v12
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|118:enabled = High_Confidence| \lstinline{|| (Own_Tracked_Alt_Rate <= OLEV)} \lstinline|&& (Cur_Vertical_Sep > MAXALTDIFF);|
+\item[-] Boolean repair:
+
+\lstinline{b3 | !b2 | !b1 | !b0}
+\item[-] C repair statement: 
+
+\lstinline|enabled = (Cur_Vertical_Sep > 600| \lstinline|&& High_Confidence != 0| \lstinline|&& Own_Tracked_Alt_Rate < 601);|
+\end{itemize}
+
+\item TCAS-v26
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|118: enabled = High_Confidence| \lstinline|&& (Cur_Vertical_Sep > MAXALTDIFF);|
+\item[-] Boolean repair:
+
+\lstinline{b2 | !b1 | !b0}
+\item[-] C repair statement: 
+
+\lstinline|enabled = (Cur_Vertical_Sep > 600| \lstinline|&& High_Confidence != 0| \lstinline|&& Own_Tracked_Alt_Rate < 601);|
+\end{itemize}
+
+\item TCAS-v27
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|118: enabled = High_Confidence| \lstinline|&& (Own_Tracked_Alt_Rate <= OLEV)|
+\item[-] Boolean repair:
+
+\lstinline{b2 | !b1 | !b0}
+\item[-] C repair statement: 
+
+\lstinline|enabled = (Cur_Vertical_Sep > 600| \lstinline|&& High_Confidence != 0| \lstinline|&& Own_Tracked_Alt_Rate < 601);|
+\end{itemize}
+
+\item TCAS-v34
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|124: if (enabled && tcas_equipped| \lstinline{&& intent_not_known} \lstinline{|| !tcas_equipped)}
+\item[-] Boolean repair:
+
+\lstinline{if (b1 | (!b0 & b2))}
+\item[-] C repair statement: 
+
+\lstinline{if(enabled != 0 && ( intent_not_known != 0 || tcas_equipped == 0 ));}
+\end{itemize}
+
+\item While-v1
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|15: while (i < count - 1)|
+\item[-] Boolean repair:
+
+\lstinline{if(b4 | (!b2 & b3) | (!b1 & b3) | (!b1 & b2) | !b0)}
+\item[-] C repair statement: 
+
+\lstinline|while (count - i > 0 && count - i < 5)|
+\end{itemize}
+
+\item While-v2
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|16: if (max > a[i])|
+\item[-] Boolean repair:
+
+\lstinline{if !b2}
+\item[-] C repair statement: 
+
+\lstinline|if (a[i] - max > -1)|
+\end{itemize}
+
+\item For-v1
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|15: for(i = 1; i < count - 1; i++)|
+\item[-] Boolean repair:
+
+\lstinline{if (b4 | (!b2 & b3) | (!b1 & b3) | (!b1 & b2) | !b0)}
+\item[-] C repair statement: 
+
+\lstinline|for (i = 1; count - i > 0 && count - i < 5; i++)|
+\end{itemize}
+
+\item For-v2
+\begin{itemize}
+\item[-] Faulty statement:
+
+\lstinline|16: if (max > a[i])|
+\item[-] Boolean repair:
+
+\lstinline{if !b2}
+\item[-] C repair statement: 
+
+\lstinline|if (a[i] - max > -1)|
+\end{itemize}
+
+\end{itemize}
