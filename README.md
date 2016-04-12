@@ -1,6 +1,6 @@
 # Program Repair Based on SMT
 
-A (still on writing) paper describing how to repair a faulty C program automatically by converting it to its boolean program equivalence.
+A paper describing how to repair a faulty C program automatically by converting it to its boolean program equivalence.
 
 ## TODO List
 
